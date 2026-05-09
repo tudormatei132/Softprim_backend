@@ -1,12 +1,12 @@
 # softprim-backend
 
-API REST pentru gestionarea unui catalog de produse si plasarea de comenzi. Built cu Node.js, Express si MySQL.
+API REST pentru gestionarea unui catalog de produse si plasarea de comenzi, scris in Node.js cu Express si MariaDB.
 
 ## Tehnologii
 
-- Node.js (>=18)
+- Node.js v24.15.0
 - Express 4
-- MySQL 8 (driver `mysql2/promise`)
+- MariaDB 12.2 (driver `mysql2/promise`)
 - dotenv
 
 ## Structura proiectului
@@ -19,7 +19,7 @@ API REST pentru gestionarea unui catalog de produse si plasarea de comenzi. Buil
 └── src/
     ├── server.js              # bootstrap — incarca .env, porneste Express
     ├── app.js                 # configurare Express, montare routere si middleware
-    ├── db.js                  # pool de conexiuni MySQL
+    ├── db.js                  # pool de conexiuni MariaDB
     ├── routes/                # definirea rutelor HTTP
     ├── controllers/           # parsarea cererii, apel service, formatare raspuns
     ├── services/              # logica de business + queries SQL
@@ -371,10 +371,10 @@ Toate erorile au acelasi format:
 Coduri folosite:
 - `400 Bad Request` — input invalid (vezi listele per endpoint)
 - `404 Not Found` — resursa lipsa (`Product not found`) sau ruta inexistenta (`Route not found`, ex. `GET /api/foo`)
-- `500 Internal Server Error` — eroare neasteptata pe server (ex. probleme de conexiune cu MySQL); raspunsul contine mesajul tehnic al erorii
+- `500 Internal Server Error` — eroare neasteptata pe server (ex. probleme de conexiune cu MariaDB); raspunsul contine mesajul tehnic al erorii
 
 ## Note
 
 - Pentru cereri GET, parametrii se trimit in **URL ca query string** (`?category_id=1`), nu in body.
 - Stocul se decrementeaza atomic la crearea comenzii (folosind `SELECT ... FOR UPDATE` intr-o tranzactie).
-- Conexiunile la MySQL sunt servite dintr-un pool (`mysql2.createPool`).
+- Conexiunile la MariaDB sunt servite dintr-un pool (`mysql2.createPool`).
